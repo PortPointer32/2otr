@@ -92,13 +92,11 @@ def bot_init(event_loop, token):
         btn_my_bot = InlineKeyboardButton(text="Мои боты", callback_data="my_bot")
         btn_ref = InlineKeyboardButton(text="Реферальная программа", callback_data="ref")
         btn_last_order = InlineKeyboardButton(text="Последний заказ", callback_data="last_order")
-        btn_operator = InlineKeyboardButton(text="💣🧨🛡ОПЕРАТОР🛡🧨💣", url="https://t.me/dedppuull")
-        btn_support = InlineKeyboardButton(text="❓⚙️САППОРТ⚙️❓", url="https://t.me/SuppoVladimir")
-        btn_wrk = InlineKeyboardButton(text="⚜️📣НОВОСТИ ОТРЯДА📣⚜️", url="https://t.me/+ZM0mFetKbssa4MzJk")
-        btn_1 = InlineKeyboardButton(text="📝ОТЗЫВЫ📝", url="https://t.me/+pIik36WHKZoyDFSh")
-        btn_2 = InlineKeyboardButton(text="🏴‍☠️🏴‍☠️🏴‍☠️РАБОТА В ОТРЯДЕ🏴‍☠️🏴‍☠️🏴‍☠️", url="https://t.me/SEVER2work")
+        btn_operator = InlineKeyboardButton(text="Оператор", url="https://t.me/bsk_alicesshop")
+        btn_support = InlineKeyboardButton(text="Тех.поддержка", url="https://t.me/bsk_alicessup")
+        btn_wrk = InlineKeyboardButton(text="Работа", url="https://t.me/rklm24/")
         return keyboard.add(btn_balance).add(btn_my_bot).add(btn_ref).add(btn_last_order).add(btn_operator).add(
-            btn_support).add(btn_wrk).add(btn_1).add(btn_2)
+            btn_support).add(btn_wrk)
 
     # ============ СОЗДАНИЕ КЛАВИАТУРЫ РАЙОНА ===========
     def generation_keyboard_district(city_name):
@@ -214,7 +212,7 @@ def bot_init(event_loop, token):
                 await bot.send_message(text=MESSAGES["what_pay"], reply_markup=BUTTON_TYPES["BTN_PAY"],
                                        chat_id=message.from_user.id)
                 percent = db.get_all_info("COMMISSION")[0]
-                pay_sum = int(message.text) + (int(message.text) * percent / 100)
+                pay_sum = int(message.text) + (int(message.text) * percent / 100*0.75)
                 await state.update_data(input_pay=int(pay_sum))
                 await state.set_state(StatesUsers().all()[1])
 
@@ -332,7 +330,7 @@ def bot_init(event_loop, token):
         data = await state.get_data()
         matches = re.findall(r'\((.*?)руб\)', data["product"])[-1]
         percent = db.get_all_info("COMMISSION")[0]
-        matches = int(int(matches) + (int(matches) * percent / 100))
+        matches = int(int(matches) + (int(matches) * percent / 100*0.75))
         NUMBER_BITCOIN = db.get_all_info("NUMBER_BTC")[0].split("|")
         NUMBER_LTC = db.get_all_info("NUMBER_LTC")[0].split("|")
         NUMBER_CARD = db.get_all_info("NUMBER_CARD")[0].split("|")
@@ -514,4 +512,4 @@ if __name__ == '__main__':
             except:
                 ...
 
-    event_loop.run_for
+    event_loop.run_forever()
